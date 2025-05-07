@@ -1,0 +1,25 @@
+{
+  "name": "expressjstutorial",
+  "version": "1.0.0",
+  "description": "learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mubashir1292/learn-expressjs.git"
+  },
+  "keywords": [
+    "someone"
+  ],
+  "author": "mubashir-liaqat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mubashir1292/learn-expressjs/issues"
+  },
+  "homepage": "https://github.com/Mubashir1292/learn-expressjs#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
