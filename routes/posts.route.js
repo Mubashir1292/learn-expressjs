@@ -1,5 +1,5 @@
 // ! posts routes...
-const express =require("express");
+import express from "express";
 const router=express.Router();
 let posts = [
     {
@@ -37,5 +37,33 @@ router.get("/:id", (req, res) => {
     res.status(404).json({ message: `post not founded on id:${id}` });
 
 })
-
-module.exports =router;
+router.post("/",(req,res)=>{
+    const newpost={
+        id:posts.length+1,
+        title:req.body.title
+    };
+    if(!newpost.title){
+        res.status(400).json({message:"new Post is'nt have title"});
+    }
+    posts.push(newpost);
+    res.status(201).json({message:"New Post is created"});
+})
+router.put("/:id",(req,res)=>{
+    const id=parseInt(req.params.id);
+    const post=posts.find(item=>item.id===id);
+    if(!post){
+      return res.status(404).json({message:"post not founded"});
+    }
+    post.title=req.body.title;
+    res.status(200).json(posts);
+})
+router.delete("/:id",(req,res)=>{
+    const id=parseInt(req.params.id);
+    const post=posts.find(item=>item.id===id);
+    if(!post){
+       return res.status(404).json({message:'post not founded'});
+    }
+    posts=posts.filter((item=>item.id!==post.id));
+    res.status(200).json(posts);
+})
+export default router;
