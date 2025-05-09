@@ -67,3 +67,5 @@ router.delete("/:id",(req,res)=>{
     res.status(200).json(posts);
 })
 export default router;
+// ! I have added the commits as well as the pushed the code 
+//! will add some of the controllers which will get the function calls as well..
