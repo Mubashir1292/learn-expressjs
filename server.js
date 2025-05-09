@@ -32,7 +32,6 @@ app.get('/api/posts', (req, res) => {
         return res.status(200).json(requiredResult);
     }
     res.status(200).json(posts);
-
 })
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"))
