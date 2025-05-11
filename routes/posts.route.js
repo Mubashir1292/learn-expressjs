@@ -20,6 +20,7 @@ let posts = [
     },
 
 ]
+
 router.get('/', (req, res) => {
     const limit = parseInt(req.query.limit);
     if (!isNaN(limit) && limit > 0) {
@@ -28,40 +29,43 @@ router.get('/', (req, res) => {
     }
     res.status(200).json(posts);
 })
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res,next) => {
     const { id } = req.params;
     const post = posts.find((item) => item.id === parseInt(id));
     if (post) {
       return res.status(200).json(post);
     }
-    res.status(404).json({ message: `post not founded on id:${id}` });
-
+    const error=new Error(`post not founded on this id :${id}`);
+    return next(error);
 })
-router.post("/",(req,res)=>{
+router.post("/",(req,res,next)=>{
     const newpost={
         id:posts.length+1,
         title:req.body.title
     };
     if(!newpost.title){
-        res.status(400).json({message:"new Post is'nt have title"});
+        const error=new Error("Post Title not founded");
+        return next(error);
     }
     posts.push(newpost);
     res.status(201).json({message:"New Post is created"});
 })
-router.put("/:id",(req,res)=>{
+router.put("/:id",(req,res,next)=>{
     const id=parseInt(req.params.id);
     const post=posts.find(item=>item.id===id);
     if(!post){
-      return res.status(404).json({message:"post not founded"});
+      const error=new Error("Post not found to update");
+      return next(error);
     }
     post.title=req.body.title;
     res.status(200).json(posts);
 })
-router.delete("/:id",(req,res)=>{
+router.delete("/:id",(req,res,next)=>{
     const id=parseInt(req.params.id);
     const post=posts.find(item=>item.id===id);
     if(!post){
-       return res.status(404).json({message:'post not founded'});
+       const error=new Error("post not founded");
+       return next(error);
     }
     posts=posts.filter((item=>item.id!==post.id));
     res.status(200).json(posts);
