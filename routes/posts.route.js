@@ -38,15 +38,17 @@ router.get("/:id", (req, res,next) => {
     const error=new Error(`post not founded on this id :${id}`);
     return next(error);
 })
-router.post("/",(req,res,next)=>{
+router.post("/",(req,res,next)=>{    
+    if(!req.body?.title){
+        const error=new Error("Please include a title with post..");
+        error.status=400;
+        return next(error);
+    }
+
     const newpost={
         id:posts.length+1,
         title:req.body.title
     };
-    if(!newpost.title){
-        const error=new Error("Post Title not founded");
-        return next(error);
-    }
     posts.push(newpost);
     res.status(201).json({message:"New Post is created"});
 })
@@ -55,6 +57,7 @@ router.put("/:id",(req,res,next)=>{
     const post=posts.find(item=>item.id===id);
     if(!post){
       const error=new Error("Post not found to update");
+      error.status=404;
       return next(error);
     }
     post.title=req.body.title;
@@ -65,6 +68,7 @@ router.delete("/:id",(req,res,next)=>{
     const post=posts.find(item=>item.id===id);
     if(!post){
        const error=new Error("post not founded");
+       error.status=404;
        return next(error);
     }
     posts=posts.filter((item=>item.id!==post.id));
