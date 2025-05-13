@@ -81,7 +81,3 @@ export const deletePost=(req,res,next)=>{
     posts=posts.filter(item=>item.id!==id);
     res.status(200).json(posts);
 }
-
-
-
-
